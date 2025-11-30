@@ -46,7 +46,7 @@
         
         label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: #888; }
 
-        input, select {
+        input[type="text"], input[type="tel"], input[type="number"], select {
             width: 100%; background: transparent; border: none; border-bottom: 1px solid #555;
             color: var(--text-main); padding: 12px 5px; font-family: var(--font-main); font-size: 1rem; transition: all 0.3s;
             border-radius: 0; 
@@ -63,22 +63,40 @@
         button:active { transform: scale(0.98); }
         button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* --- 編輯模式區域 (預設顯示) --- */
-        #editShopSection { display: block; }
+        /* --- 地圖選項 Radio Buttons --- */
+        .map-options {
+            display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap;
+        }
+        .radio-label {
+            display: flex; align-items: center; cursor: pointer; color: var(--text-main); font-size: 0.95rem;
+        }
+        .radio-label input[type="radio"] {
+            appearance: none; -webkit-appearance: none;
+            width: 18px; height: 18px; border: 1px solid var(--gold); border-radius: 50%;
+            margin-right: 8px; position: relative; display: grid; place-content: center;
+        }
+        .radio-label input[type="radio"]::before {
+            content: ""; width: 10px; height: 10px; border-radius: 50%;
+            background: var(--gold); transform: scale(0); transition: 0.2s transform ease-in-out;
+        }
+        .radio-label input[type="radio"]:checked::before { transform: scale(1); }
+        
+        /* 手動網址輸入框容器 */
+        #manualMapInputContainer { margin-top: 15px; display: none; }
 
-        /* --- 閱讀模式區域 (預設隱藏) --- */
+        /* --- 編輯與閱讀模式 --- */
+        #editShopSection { display: block; }
         #viewShopSection { display: none; text-align: center; }
+        
         .view-shop-title { font-size: 1.8rem; color: var(--gold); margin-bottom: 10px; font-weight: bold; border-bottom: 1px dashed #333; padding-bottom: 10px; display: block;}
         .view-shop-phone { font-size: 1.2rem; color: #ccc; margin-bottom: 20px; display: block; }
         .view-shop-phone::before { content: 'TEL : '; color: var(--gold); font-size: 0.9rem; }
-        .view-actions { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .view-actions { display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap;}
 
-        /* --- Header 按鈕群 (Edit Mode) --- */
         .shop-header { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
         .shop-input-container { flex-grow: 1; min-width: 200px; }
-        .shop-btn-group { display: flex; gap: 10px; }
+        .btn-confirm { width: 100%; margin-top: 10px; }
 
-        /* --- 清除按鈕 --- */
         .btn-clear-shop { 
             width: auto; padding: 10px 20px; font-size: 0.9rem; 
             border-color: #663333; color: #dd6666; 
@@ -99,13 +117,11 @@
         }
         .file-upload-wrapper:hover .custom-file-upload { background-color: var(--gold); color: var(--bg-color); }
 
-        /* --- 同步的店家圖片 --- */
         .synced-shop-img {
             max-width: 100%; max-height: 250px; border: 1px solid var(--gold); border-radius: 8px; 
             cursor: zoom-in; object-fit: cover; margin: 0 auto; display: block;
         }
 
-        /* --- 燈箱 Lightbox --- */
         .lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.95); z-index: 2000;
@@ -144,39 +160,18 @@
         .paid-status { font-size: 0.9rem; text-align: right; color: #888; margin-top: 5px; }
         .paid-status span { color: var(--gold); font-weight: bold; }
 
-        /* --- 手機版 RWD 優化 --- */
         @media (max-width: 768px) { 
             body { padding: 10px; }
             .container { padding-bottom: 60px; }
             h1 { font-size: 1.8rem; margin-bottom: 20px; }
             .section { padding: 20px 15px; }
-            
-            /* 新增訂單區塊堆疊 */
             .input-group, .input-group-4 { grid-template-columns: 1fr; gap: 20px; }
             #addBtn, #clearBtn { width: 100%; }
-            
-            /* 店家 header 手機版 */
             .shop-header { flex-direction: column; width: 100%; }
             .shop-input-container { width: 100%; }
-            
-            /* 按鈕群組在手機上並排滿版 */
-            .shop-btn-group { 
-                width: 100%; 
-                display: flex; 
-                gap: 10px; 
-                margin-top: 10px; 
-            }
-            .shop-btn-group button {
-                flex: 1; /* 各佔 50% */
-                display: flex; justify-content: center; align-items: center;
-            }
-
             .shop-row { flex-direction: column; align-items: stretch; }
-            
             .summary-box { flex-direction: column; align-items: flex-end; }
             .preview-container.active { height: 200px; }
-            
-            /* 閱讀模式手機版 */
             .view-actions { flex-direction: column; gap: 10px; }
             .view-actions button { width: 100%; }
         }
@@ -191,7 +186,7 @@
     </div>
 
     <div class="container">
-        <h1>來訂便當囉！</h1>
+        <h1>御弁当注文</h1>
 
         <!-- 店家設定區 -->
         <div class="section">
@@ -203,11 +198,7 @@
                     <div class="shop-header full-width">
                         <div class="shop-input-container">
                             <label>便當店名稱</label>
-                            <input type="text" id="shopName" placeholder="輸入後請接著輸入電話">
-                        </div>
-                        <div class="shop-btn-group">
-                             <button class="btn-confirm" id="confirmBtn" onclick="confirmShop()">確定</button>
-                             <button class="btn-map" id="mapBtnEdit" onclick="openMap('edit')">📍 地圖</button>
+                            <input type="text" id="shopName" placeholder="輸入後請按確定">
                         </div>
                     </div>
                 </div>
@@ -216,7 +207,7 @@
                     <div class="shop-row">
                         <div style="flex-grow: 1; width: 100%;">
                             <label>店家電話</label>
-                            <input type="tel" id="shopPhone" placeholder="輸入電話後請按確定">
+                            <input type="tel" id="shopPhone" placeholder="輸入電話">
                         </div>
                         
                         <div style="flex-grow: 1; width: 100%;">
@@ -230,11 +221,36 @@
                              <div id="uploadFileName" style="font-size: 0.85rem; color: var(--gold); margin-top: 5px; min-height: 1.2em;"></div>
                         </div>
                     </div>
-                    <div style="margin-top: 10px; font-size: 0.9rem; color: #888;"></div>
+
+                    <!-- 地圖設定區塊 -->
+                    <div class="shop-row" style="margin-top: 10px; border-top: 1px dashed #333; padding-top: 15px;">
+                        <div style="width: 100%;">
+                            <label>地圖設定</label>
+                            <div class="map-options">
+                                <label class="radio-label">
+                                    <input type="radio" name="mapType" value="auto" checked onchange="toggleManualMapInput()"> 自動搜尋
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="mapType" value="manual" onchange="toggleManualMapInput()"> 手動網址
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="mapType" value="none" onchange="toggleManualMapInput()"> 無
+                                </label>
+                            </div>
+                            <!-- 手動網址輸入框 -->
+                            <div id="manualMapInputContainer">
+                                <input type="text" id="manualMapUrl" placeholder="請貼上 Google Maps 連結 (https://...)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn-confirm" id="confirmBtn" onclick="confirmShop()">確定並同步</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 2. 閱讀模式 (View Mode) - 當有資料時顯示此區塊 -->
+            <!-- 2. 閱讀模式 (View Mode) -->
             <div id="viewShopSection">
                 <span id="viewShopName" class="view-shop-title"></span>
                 <span id="viewShopPhone" class="view-shop-phone"></span>
@@ -242,7 +258,8 @@
                 <img id="viewShopImg" class="synced-shop-img" src="" onclick="openLightbox(this.src)" alt="Menu" style="display:none;">
                 
                 <div class="view-actions">
-                    <button class="btn-map" onclick="openMap('view')">📍 Google 地圖</button>
+                    <!-- 地圖按鈕 (JS 控制顯示/隱藏與連結) -->
+                    <button class="btn-map" id="viewMapBtn" onclick="openMap('view')">📍 Google 地圖</button>
                     <button class="btn-clear-shop" onclick="clearShopInfo()">✕ 清除店家資訊</button>
                 </div>
                 <div style="margin-top: 15px; font-size: 0.8rem; color: #666;">(滿 600 元可外送)</div>
@@ -365,25 +382,23 @@
             renderOrders(orders);
         }, (error) => console.error(error));
 
-        // 2. 店家資訊監聽 (決定顯示 編輯模式 or 閱讀模式)
+        // 2. 店家資訊監聽
         const shopDocRef = doc(db, SHOP_INFO_COLLECTION, SHOP_INFO_DOC_ID);
         onSnapshot(shopDocRef, (docSnapshot) => {
             const editSection = document.getElementById('editShopSection');
             const viewSection = document.getElementById('viewShopSection');
 
             if (docSnapshot.exists()) {
-                // --- 有資料：切換到閱讀模式 ---
+                // --- 閱讀模式 ---
                 const data = docSnapshot.data();
                 
-                // 隱藏編輯，顯示閱讀
                 editSection.style.display = 'none';
                 viewSection.style.display = 'block';
 
-                // 填入閱讀模式的內容
                 document.getElementById('viewShopName').innerText = data.name || "(未輸入店名)";
                 document.getElementById('viewShopPhone').innerText = data.phone || "(無)";
                 
-                // 圖片處理
+                // 圖片
                 const imgEl = document.getElementById('viewShopImg');
                 if (data.imageBase64) {
                     imgEl.src = data.imageBase64;
@@ -391,21 +406,52 @@
                 } else {
                     imgEl.style.display = 'none';
                 }
+
+                // 地圖按鈕處理 (閱讀模式)
+                const viewMapBtn = document.getElementById('viewMapBtn');
+                const mapType = data.mapType || 'auto'; // 預設 auto
                 
-                // 順便把資料回填到隱藏的 input，以防使用者清除後想修改
+                if (mapType === 'none') {
+                    viewMapBtn.style.display = 'none';
+                } else {
+                    viewMapBtn.style.display = 'inline-block';
+                    // 儲存地圖連結到按鈕屬性，方便點擊時讀取
+                    if (mapType === 'manual' && data.manualUrl) {
+                        viewMapBtn.setAttribute('data-url', data.manualUrl);
+                        viewMapBtn.setAttribute('data-mode', 'manual');
+                    } else {
+                        viewMapBtn.setAttribute('data-mode', 'auto');
+                    }
+                }
+                
+                // 回填資料到編輯區 (以便清除後再次編輯時保留資料)
                 document.getElementById('shopName').value = data.name || "";
                 document.getElementById('shopPhone').value = data.phone || "";
+                document.getElementById('manualMapUrl').value = data.manualUrl || "";
+                
+                // 回填 Radio Button 狀態
+                const radios = document.getElementsByName('mapType');
+                radios.forEach(r => {
+                    if (r.value === mapType) r.checked = true;
+                });
+                toggleManualMapInput(); // 更新 UI 顯示
 
             } else {
-                // --- 無資料：切換到編輯模式 ---
+                // --- 編輯模式 ---
                 editSection.style.display = 'block';
                 viewSection.style.display = 'none';
                 
-                // 清空 Edit Inputs
+                // 重置
                 document.getElementById('shopName').value = "";
                 document.getElementById('shopPhone').value = "";
                 document.getElementById('shopImageInput').value = "";
                 document.getElementById('uploadFileName').innerText = "";
+                
+                // 重置地圖設定
+                const radios = document.getElementsByName('mapType');
+                radios.forEach(r => r.checked = (r.value === 'auto'));
+                document.getElementById('manualMapUrl').value = "";
+                toggleManualMapInput();
             }
         });
 
@@ -415,6 +461,17 @@
                 document.getElementById('uploadFileName').innerText = "已選擇: " + input.files[0].name;
             } else {
                 document.getElementById('uploadFileName').innerText = "";
+            }
+        }
+        
+        // 切換手動地圖輸入框顯示
+        window.toggleManualMapInput = function() {
+            const mapType = document.querySelector('input[name="mapType"]:checked').value;
+            const container = document.getElementById('manualMapInputContainer');
+            if(mapType === 'manual') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
             }
         }
 
@@ -452,7 +509,12 @@
             const fileInput = document.getElementById('shopImageInput');
             const btn = document.getElementById('confirmBtn');
             
+            // 地圖設定
+            const mapType = document.querySelector('input[name="mapType"]:checked').value;
+            const manualUrl = document.getElementById('manualMapUrl').value.trim();
+            
             if(!name) return alert("請輸入店名");
+            if(mapType === 'manual' && !manualUrl) return alert("請輸入 Google Maps 網址");
 
             btn.disabled = true;
             btn.innerText = "同步中...";
@@ -463,14 +525,17 @@
                     imageBase64 = await compressImage(fileInput.files[0]);
                 }
 
-                const updateData = { name: name, phone: phone };
+                const updateData = { 
+                    name: name, 
+                    phone: phone,
+                    mapType: mapType,
+                    manualUrl: manualUrl
+                };
+                
                 if (imageBase64) { updateData.imageBase64 = imageBase64; }
 
-                // 使用 merge: true，若沒上傳新圖則保留舊圖 (雖然現在邏輯是清除才會回到編輯，但保留彈性)
                 await setDoc(doc(db, SHOP_INFO_COLLECTION, SHOP_INFO_DOC_ID), updateData, { merge: true });
                 
-                // 成功後，onSnapshot 會自動處理 UI 切換，這裡不需要手動 hide/show
-                // 僅重置上傳欄位顯示
                 fileInput.value = '';
                 document.getElementById('uploadFileName').innerText = '';
 
@@ -479,7 +544,7 @@
                 alert("同步失敗 (圖片可能太大)");
             } finally {
                 btn.disabled = false;
-                btn.innerText = "確定";
+                btn.innerText = "確定並同步";
             }
         };
 
@@ -489,6 +554,30 @@
                 catch (e) { console.error("清除失敗", e); }
             }
         };
+
+        // 開啟地圖 (依據閱讀模式按鈕上的屬性)
+        window.openMap = function(source) {
+            let mode = 'auto';
+            let url = '';
+            let name = '';
+
+            if (source === 'view') {
+                const btn = document.getElementById('viewMapBtn');
+                mode = btn.getAttribute('data-mode');
+                url = btn.getAttribute('data-url');
+                name = document.getElementById('viewShopName').innerText;
+            } else {
+                // 編輯模式預覽用 (如果有需要)
+                return; 
+            }
+
+            if (mode === 'manual' && url) {
+                window.open(url, '_blank');
+            } else {
+                if(!name || name === "(未輸入店名)") return alert("無法導航");
+                window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`, '_blank');
+            }
+        }
 
         // Render & Helpers
         function renderOrders(orders) {
@@ -595,19 +684,6 @@
             await batch.commit();
         });
 
-        window.openMap = function(mode) {
-            let name;
-            if(mode === 'edit') {
-                name = document.getElementById('shopName').value;
-            } else {
-                // 從閱讀模式的標題取值
-                name = document.getElementById('viewShopName').innerText;
-            }
-            
-            if(!name || name === "(未輸入店名)") return alert("請先輸入店名");
-            window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`, '_blank');
-        }
-
         window.updateBentoInfo = function() {
             const select = document.getElementById('bentoSelect');
             const opt = select.options[select.selectedIndex];
@@ -634,6 +710,9 @@
         window.closeLightbox = function() {
             document.getElementById('lightbox').classList.remove('active');
         }
+
+        // 初始化：檢查一次地圖選項狀態
+        toggleManualMapInput();
 
     </script>
 </body>
