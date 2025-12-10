@@ -164,6 +164,10 @@
         #loading { text-align: center; color: #666; display: none; margin: 20px 0;}
         .paid-status { font-size: 0.9rem; text-align: right; color: #888; margin-top: 5px; }
         .paid-status span { color: var(--gold); font-weight: bold; }
+   /* Copyright footer */
+        .copyright {
+            text-align: center; margin-top: 40px; color: #666; font-size: 0.8rem; letter-spacing: 0.05em;
+            }
 
         @media (max-width: 768px) { 
             body { padding: 10px; }
@@ -353,6 +357,10 @@
             </div>
             <button id="clearBtn" style="margin-top:25px; border-color: #d44; color: #d44; font-size: 0.9rem;">清除所有訂單</button>
         </div>
+                <!-- 版權宣告 -->
+        <div class="copyright">
+            Copyright &copy; 2025 Mandy Jhang. All rights reserved.
+        </div>
     </div>
 
     <script type="module">
@@ -361,7 +369,7 @@
             getFirestore, collection, addDoc, onSnapshot, deleteDoc, updateDoc, setDoc, doc, query, orderBy, getDocs, writeBatch 
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // ★★★ 請在此處貼上您的 Firebase Config ★★★
+        // ★★★ 此處貼上 Firebase Config ★★★
         const firebaseConfig = {
             apiKey: "AIzaSyCJFi6DkepDtqWehVsX7vEIFWpyKGCPmJM",
             authDomain: "bento-order-app.firebaseapp.com",
