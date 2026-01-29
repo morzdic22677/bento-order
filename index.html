@@ -271,7 +271,7 @@
                     <button class="btn-map" id="viewMapBtn" onclick="openMap('view')">📍 Google 地圖</button>
                     <button class="btn-clear-shop" onclick="clearShopInfo()">✕ 清除店家資訊</button>
                 </div>
-                <div style="margin-top: 15px; font-size: 0.8rem; color: #666;">(滿 600 元可外送)</div>
+                <div style="margin-top: 15px; font-size: 0.8rem; color: #666;">(滿 1500 元可外送，不足則流標)</div>
             </div>
 
         </div>
@@ -288,11 +288,33 @@
                     <label>品項選擇</label>
                     <select id="bentoSelect" onchange="updateBentoInfo()">
                         <option value="" disabled selected>請選擇便當</option>
-                        <option value="招牌排骨飯" data-price="100" data-img="https://placehold.co/500x300/222/c5a059?text=招牌排骨飯">招牌排骨飯</option>
-                        <option value="酥炸雞腿飯" data-price="120" data-img="https://placehold.co/500x300/222/c5a059?text=酥炸雞腿飯">酥炸雞腿飯</option>
-                        <option value="香煎鯖魚飯" data-price="110" data-img="https://placehold.co/500x300/222/c5a059?text=香煎鯖魚飯">香煎鯖魚飯</option>
-                        <option value="蔥油雞肉飯" data-price="115" data-img="https://placehold.co/500x300/222/c5a059?text=蔥油雞肉飯">蔥油雞肉飯</option>
-                        <option value="季節時蔬飯" data-price="90"  data-img="https://placehold.co/500x300/222/c5a059?text=季節時蔬飯(素)">季節時蔬飯 (素)</option>
+                        <option value="荷蘭醬爐烤鮭魚排" data-price="220" data-img="https://placehold.co/500x300/222/c5a059?text=荷蘭醬爐烤鮭魚排">荷蘭醬爐烤鮭魚排</option>
+                        <option value="義式手工牛肉捲" data-price="220" data-img="https://placehold.co/500x300/222/c5a059?text=義式手工牛肉捲">義式手工牛肉捲</option>
+                        <option value="勃根地紅酒燉牛肋（大）" data-price="180" data-img="https://placehold.co/500x300/222/c5a059?text=勃根地紅酒燉牛肋（大）">勃根地紅酒燉牛肋（大）</option>
+                        <option value="勃根地紅酒燉牛肋（小）" data-price="160" data-img="https://placehold.co/500x300/222/c5a059?text=勃根地紅酒燉牛肋（小）">勃根地紅酒燉牛肋（小）</option>
+                        <option value="義大利青醬雞腿排（大）" data-price="160"  data-img="https://placehold.co/500x300/222/c5a059?text=義大利青醬雞腿排（大）">義大利青醬雞腿排（大）</option>
+                        <option value="義大利青醬雞腿排（小）" data-price="140"  data-img="https://placehold.co/500x300/222/c5a059?text=義大利青醬雞腿排（小）">義大利青醬雞腿排（小）</option>
+                        <option value="泰式綠咖哩牛五花（大）" data-price="160"  data-img="https://placehold.co/500x300/222/c5a059?text=泰式綠咖哩牛五花（大）">泰式綠咖哩牛五花（大）</option>
+                        <option value="泰式綠咖哩牛五花（小）" data-price="140"  data-img="https://placehold.co/500x300/222/c5a059?text=泰式綠咖哩牛五花（小）">泰式綠咖哩牛五花（小）</option>
+                        <option value="里昂風味雞豬雙拼（大）" data-price="160"  data-img="https://placehold.co/500x300/222/c5a059?text=里昂風味雞豬雙拼（大）">里昂風味雞豬雙拼（大）</option>
+                        <option value="里昂風味雞豬雙拼（小）" data-price="140"  data-img="https://placehold.co/500x300/222/c5a059?text=里昂風味雞豬雙拼（小）">里昂風味雞豬雙拼（小）</option>
+                        <option value="南法燉蔬香煎鱸魚（大）" data-price="160"  data-img="https://placehold.co/500x300/222/c5a059?text=南法燉蔬香煎鱸魚（大）">南法燉蔬香煎鱸魚（大）</option>
+                        <option value="南法燉蔬香煎鱸魚（小）" data-price="140"  data-img="https://placehold.co/500x300/222/c5a059?text=南法燉蔬香煎鱸魚（小）">南法燉蔬香煎鱸魚（小）</option>
+                        <option value="紅酒醬起司漢堡排（大）" data-price="160"  data-img="https://placehold.co/500x300/222/c5a059?text=紅酒醬起司漢堡排（大）">紅酒醬起司漢堡排（大）</option>
+                        <option value="紅酒醬起司漢堡排（小）" data-price="140"  data-img="https://placehold.co/500x300/222/c5a059?text=紅酒醬起司漢堡排（小）">紅酒醬起司漢堡排（小）</option>
+                        <option value="薑汁照燒牛五花（大）" data-price="160"  data-img="https://placehold.co/500x300/222/c5a059?text=薑汁照燒牛五花（大）">薑汁照燒牛五花（大）</option>
+                        <option value="薑汁照燒牛五花（小）" data-price="140"  data-img="https://placehold.co/500x300/222/c5a059?text=薑汁照燒牛五花（小）">薑汁照燒牛五花（小）</option>
+                        <option value="薑汁照燒豬五花（大）" data-price="140"  data-img="https://placehold.co/500x300/222/c5a059?text=薑汁照燒豬五花（大）">薑汁照燒豬五花（大）</option>
+                        <option value="薑汁照燒豬五花（小）" data-price="130"  data-img="https://placehold.co/500x300/222/c5a059?text=薑汁照燒豬五花（小）">薑汁照燒豬五花（小）</option>
+                        <option value="XO 醬香煎綜合菇（蛋奶素）（大）" data-price="140"  data-img="https://placehold.co/500x300/222/c5a059?text=XO 醬香煎綜合菇（蛋奶素）（大）">XO 醬香煎綜合菇（蛋奶素）（大）</option>
+                        <option value="XO 醬香煎綜合菇（蛋奶素）（小）" data-price="130"  data-img="https://placehold.co/500x300/222/c5a059?text=XO 醬香煎綜合菇（蛋奶素）（小）">XO 醬香煎綜合菇（蛋奶素）（小）</option>
+                        <option value="迷迭香爐烤雞腿" data-price="120"  data-img="https://placehold.co/500x300/222/c5a059?text=迷迭香爐烤雞腿">迷迭香爐烤雞腿</option>
+                        <option value="泰式椒麻雞" data-price="120"  data-img="https://placehold.co/500x300/222/c5a059?text=泰式椒麻雞">泰式椒麻雞</option>
+                        <option value="XO 醬起司蝦捲（大）" data-price="120"  data-img="https://placehold.co/500x300/222/c5a059?text=XO 醬起司蝦捲（大）">XO 醬起司蝦捲（大）</option>
+                        <option value="XO 醬起司蝦捲（小）" data-price="100"  data-img="https://placehold.co/500x300/222/c5a059?text=XO 醬起司蝦捲（小）">XO 醬起司蝦捲（小）</option>
+                        <option value="客家鹹豬肉" data-price="120"  data-img="https://placehold.co/500x300/222/c5a059?text=客家鹹豬肉">客家鹹豬肉</option>
+                        <option value="黑胡椒風味豬排（大）" data-price="120"  data-img="https://placehold.co/500x300/222/c5a059?text=黑胡椒風味豬排（大）">黑胡椒風味豬排（大）</option>
+                        <option value="黑胡椒風味豬排（小）" data-price="100"  data-img="https://placehold.co/500x300/222/c5a059?text=黑胡椒風味豬排（小）">黑胡椒風味豬排（小）</option>
                     </select>
                 </div>
                 <div>
@@ -359,7 +381,7 @@
         </div>
                 <!-- 版權宣告 -->
         <div class="copyright">
-            Copyright &copy; 2025 Mandy Jhang. All rights reserved.
+            Copyright &copy; 2025-2026 Mandy Jhang. All rights reserved.
         </div>
     </div>
 
